@@ -61,7 +61,7 @@ test.describe('Search Tests', () => {
     await performSearchAndVerify(searchPage, longInput);
   });
 
-  // Negative Paths
+  // Negative Cases
   test('TC_SRCH_06 - Search with special characters', async () => {
     await performSearchAndVerify(searchPage, '@#$');
   });
