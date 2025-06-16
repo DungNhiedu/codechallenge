@@ -26,7 +26,7 @@ test.describe('Search Tests', () => {
     await performSearchAndVerify(searchPage, 'PIM', 'PIM', /\/pim\/viewEmployeeList/);
   });
 
-  test('TC_SRCH_03 - Case-insensitive search', async () => {
+  test('TC_SRCH_03 - Case-insensitive search: { timeout: number; } search', async () => {
     await performSearchAndVerify(searchPage, 'leave', 'leave', /\/leave\/viewLeaveList/);
   });
 
@@ -101,5 +101,13 @@ test.describe('Search Tests', () => {
     }
     const count = await searchPage.getDropdownCount();
     expect(count).toBeGreaterThanOrEqual(0);
+  });
+
+  test('TC_SRCH_16 - Search with mixed case "AdMiN"', async ({ page }) => {
+    await performSearchAndVerify(searchPage, 'AdMiN', 'Admin', /\/admin\/viewSystemUsers/);
+  });
+  
+  test('TC_SRCH_17 - Search with numbers "123"', async () => {
+    await performSearchAndVerify(searchPage, '123');
   });
 });
