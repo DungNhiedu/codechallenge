@@ -55,5 +55,5 @@ This framework is designed to automate testing using modern tools and best pract
 
 ### CI/CD Execution:
 The framework is configured to run tests automatically in CI/CD pipelines. Push your changes to the repository, and the tests will execute as per the CI configuration.
-
+npm ci
 
