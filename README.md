@@ -36,8 +36,8 @@ This framework is designed to automate testing using modern tools and best pract
 3. Install dependencies:
     npm install
 
-### Running Tests:
 ## Running Tests:
+### Running Tests:
 1. Execute all tests:
     npx playwright test
 2. Run a specific test file:
