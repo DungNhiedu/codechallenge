@@ -6,12 +6,27 @@ test.describe('OrangeHRM API Tests with Nock Mock', () => {
   let apiClient: ApiClient;
   let token: string;
 
+  function mockLoginSuccess() {
+    nock('https://opensource-demo.orangehrmlive.com')
+      .post('/auth/login', { username: 'Admin', password: 'admin123' })
+      .reply(200, {
+        token: 'mocked-token-123',
+        user: { username: 'Admin', role: 'admin' },
+      });
+  }
+
+  function mockLoginFailure() {
+    nock('https://opensource-demo.orangehrmlive.com')
+      .post('/auth/login', { username: 'invalid_user', password: 'wrong_password' })
+      .reply(401, { error: 'Invalid username or password' });
+  }
+
   test.beforeAll(async () => {
     apiClient = await ApiClient.create('https://opensource-demo.orangehrmlive.com');
   });
 
   test.afterEach(() => {
-    nock.cleanAll(); // Xóa mock sau mỗi test
+    nock.cleanAll();
   });
 
   test.afterAll(async () => {
@@ -19,12 +34,7 @@ test.describe('OrangeHRM API Tests with Nock Mock', () => {
   });
 
   test('TC_API_01 - Login API with valid credentials', async () => {
-    nock('https://opensource-demo.orangehrmlive.com')
-      .post('/auth/login', { username: 'Admin', password: 'admin123' })
-      .reply(200, {
-        token: 'mocked-token-123',
-        user: { username: 'Admin', role: 'admin' },
-      });
+    mockLoginSuccess();
 
     const response = await apiClient.login('Admin', 'admin123');
     expect(response.token).toBe('mocked-token-123');
@@ -33,9 +43,7 @@ test.describe('OrangeHRM API Tests with Nock Mock', () => {
   });
 
   test('TC_API_02 - Login API with invalid credentials', async () => {
-    nock('https://opensource-demo.orangehrmlive.com')
-      .post('/auth/login', { username: 'invalid_user', password: 'wrong_password' })
-      .reply(401, { error: 'Invalid username or password' });
+    mockLoginFailure();
 
     const error = await apiClient.login('invalid_user', 'wrong_password').catch(e => e);
     expect(error).toBeInstanceOf(Error);
@@ -109,8 +117,8 @@ test.describe('OrangeHRM API Tests with Nock Mock', () => {
 
   test('TC_API_08 - Access unauthorized endpoint without token', async () => {
     nock('https://opensource-demo.orangehrmlive.com')
-    .get('/viewEmployeeList')
-    .reply(401, { error: 'Unauthorized' });
+      .get('/viewEmployeeList')
+      .reply(401, { error: 'Unauthorized' });
 
     const error = await apiClient.getEmployees('').catch(e => e);
     expect(error).toBeInstanceOf(Error);
