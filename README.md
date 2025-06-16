@@ -40,6 +40,8 @@ This framework is designed to automate testing using modern tools and best pract
 ### Running Tests:
 1. Execute all tests:
     npx playwright test
+2. Execute all tests UI:
+    npx playwright test --ui
 2. Run a specific test file:
     npx playwright test <test-file-path>
 3. View the test report:
