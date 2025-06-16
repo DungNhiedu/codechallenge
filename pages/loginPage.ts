@@ -34,7 +34,6 @@ export class LoginPage extends BasePage {
       this.loginButton.click(),
     ]);
 
-    // Kiểm tra URL để xác định login thành công hay không
     if (this.page.url().includes('/dashboard')) {
       await expect(this.page.locator('h6:has-text("Dashboard")')).toBeVisible();
       return true;
