@@ -34,26 +34,34 @@ This framework is designed to automate testing using modern tools and best pract
    git clone <repository-url>
    cd <repository-folder>
 3. Install dependencies:
+   ```bash
     npm install
 
 ## Running Tests:
 ### Running Tests:
 1. Execute all tests:
+   ```bash
     npx playwright test
-2. Execute all tests UI:
+3. Execute all tests UI:
+   ```bash
     npx playwright test --ui
 2. Run a specific test file:
+   ```bash
     npx playwright test <test-file-path>
-3. View the test report:
+4. View the test report:
+   ```bash
     npx playwright show-report
 
 ## Debugging:
 1. Run tests in headed mode for debugging:
+   ```bash
     npx playwright test --headed
 2. Use trace viewer for failed tests:
+   ```bash
     npx playwright show-trace <trace-file>
 
 ### CI/CD Execution:
 The framework is configured to run tests automatically in CI/CD pipelines. Push your changes to the repository, and the tests will execute as per the CI configuration.
+   ```bash
     npm ci
 
