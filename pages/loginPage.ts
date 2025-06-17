@@ -28,12 +28,10 @@ export class LoginPage extends BasePage {
   async login(username: string, password: string): Promise<boolean> {
     await this.usernameInput.fill(username);
     await this.passwordInput.fill(password);
-
     await Promise.all([
       this.page.waitForLoadState('networkidle'),
       this.loginButton.click(),
     ]);
-
     if (this.page.url().includes('/dashboard')) {
       await expect(this.page.locator('h6:has-text("Dashboard")')).toBeVisible();
       return true;
@@ -57,5 +55,11 @@ export class LoginPage extends BasePage {
   async expectPasswordRequiredError() {
     await this.passwordError.waitFor({ state: 'visible', timeout: 5000 });
     await this.expectText(this.passwordError, 'Required');
+  }
+
+  async expectFieldRequiredError(field: 'username' | 'password') {
+    const locator = field === 'username' ? this.usernameError : this.passwordError;
+    await locator.waitFor({ state: 'visible', timeout: 5000 });
+    await this.expectText(locator, 'Required');
   }
 }
