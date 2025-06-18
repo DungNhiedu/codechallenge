@@ -26,7 +26,6 @@ This framework is designed to automate testing using modern tools and best pract
 ---
 
 ## Steps to Execute the Demo Scripts
-
 ### Prerequisites:
 1. Install [Node.js](https://nodejs.org/) (v16 or higher).
 2. Clone the repository:
